@@ -1,11 +1,11 @@
-const Card = ({ card, handleChoice }) => {
+const Card = ({ card, handleChoice, flipped }) => {
   const handleClick = () => {
     handleChoice(card);
   };
 
   return (
     <div className="card" key={card.id}>
-      <div>
+      <div className={flipped ? "flipped" : ""}>
         <div className="front">
           <img src={card.src} alt="card front" />
         </div>

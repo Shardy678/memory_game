@@ -37,7 +37,7 @@ function App() {
   };
 
   useEffect(() => {
-    if (!choiceOne && !choiceTwo) {
+    if (choiceOne && choiceTwo) {
       if (choiceOne.src === choiceTwo.src) {
         setCards((prevCards) => {
           return prevCards.map((card) => {

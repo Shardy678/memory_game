@@ -54,11 +54,30 @@ h1 {
   width: 150px;
   height: 150px;
   background: #1a2346;
-  border-radius: 15px;
+  border-radius: 16px;
 }
 
 .card-grid {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   grid-gap: 25px;
+}
+
+p {
+  text-align: center;
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 1em;
+  line-height: 36px;
+  margin-top: 100px;
+}
+
+.card .front {
+  position: absolute;
+  transform: rotateY(90deg);
+}
+
+.flipped .front {
+  transform: rotateY(0deg);
 }
