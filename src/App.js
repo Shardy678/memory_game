@@ -21,38 +21,35 @@ function App() {
   const shuffleCards = () => {
     const shuffledCards = [...cardIcons, ...cardIcons]
       .sort(() => Math.random() - 0.5)
-      .map((card) => ({ ...card, id: nanoid() }));
+      .map(card => ({ ...card, id: nanoid() }));
     setCards(shuffledCards);
     setTurns(0);
   };
 
-  const handleChoice = (card) => {
+  const handleChoice = card => {
     choiceOne ? setChoiceTwo(card) : setChoiceOne(card);
   };
 
   const resetTurns = () => {
     setChoiceOne(null);
     setChoiceTwo(null);
-    setTurns((prevTurns) => prevTurns + 1);
+    setTurns(prevTurns => prevTurns + 1);
   };
 
   useEffect(() => {
-    if (choiceOne && choiceTwo) {
-      if (choiceOne.src === choiceTwo.src) {
-        setCards((prevCards) => {
-          return prevCards.map((card) => {
-            if (card.src === choiceOne.src) {
-              return { ...card, matched: true };
-            } else {
-              return card;
-            }
-          });
-        });
-        resetTurns();
-      } else {
-        setTimeout(() => resetTurns(), 1000);
-      }
+    if (!choiceOne || !choiceTwo) return;
+
+    if (choiceOne.src !== choiceTwo.src) {
+      return setTimeout(() => resetTurns(), 1000);
     }
+
+    setCards(prevCards => {
+      return prevCards.map(card => {
+        const isMatched = card.src === choiceOne.src;
+        return isMatched ? { ...card, matched: true } : card;
+      });
+    });
+    resetTurns();
   }, [choiceOne, choiceTwo]);
 
   console.log(cards);
@@ -62,7 +59,7 @@ function App() {
       <h1>MEMORY</h1>
       <p>Turns: {turns}</p>
       <div className="card-grid">
-        {cards.map((card) => (
+        {cards.map(card => (
           <Card
             key={card.id}
             card={card}
