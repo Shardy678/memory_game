@@ -1,15 +1,15 @@
 import "./App.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Card from "./components/Card";
 import { nanoid } from "nanoid";
 
 const cardIcons = [
-  { src: "/img/anchor.svg" },
-  { src: "/img/bicycle.svg" },
-  { src: "/img/house.svg" },
-  { src: "/img/plane.svg" },
-  { src: "/img/scissors.svg" },
-  { src: "/img/star.svg" },
+  { src: "/img/anchor.svg", matched: false },
+  { src: "/img/bicycle.svg", matched: false },
+  { src: "/img/house.svg", matched: false },
+  { src: "/img/plane.svg", matched: false },
+  { src: "/img/scissors.svg", matched: false },
+  { src: "/img/star.svg", matched: false },
 ];
 
 function App() {
@@ -30,12 +30,45 @@ function App() {
     choiceOne ? setChoiceTwo(card) : setChoiceOne(card);
   };
 
+  const resetTurns = () => {
+    setChoiceOne(null);
+    setChoiceTwo(null);
+    setTurns((prevTurns) => prevTurns + 1);
+  };
+
+  useEffect(() => {
+    if (!choiceOne && !choiceTwo) {
+      if (choiceOne.src === choiceTwo.src) {
+        setCards((prevCards) => {
+          return prevCards.map((card) => {
+            if (card.src === choiceOne.src) {
+              return { ...card, matched: true };
+            } else {
+              return card;
+            }
+          });
+        });
+        resetTurns();
+      } else {
+        setTimeout(() => resetTurns(), 1000);
+      }
+    }
+  }, [choiceOne, choiceTwo]);
+
+  console.log(cards);
+
   return (
     <div className="App">
       <h1>MEMORY</h1>
+      <p>Turns: {turns}</p>
       <div className="card-grid">
         {cards.map((card) => (
-          <Card key={card.id} card={card} handleChoice={handleChoice} />
+          <Card
+            key={card.id}
+            card={card}
+            handleChoice={handleChoice}
+            flipped={card === choiceOne || card === choiceTwo || card.matched}
+          />
         ))}
       </div>
       <button onClick={shuffleCards}>New Game</button>
