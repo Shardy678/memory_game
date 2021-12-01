@@ -1,7 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap");
-@import url(//db.onlinewebfonts.com/c/67415ab41a7350f81536b69763e6d031?family=Recoleta-Regular);
+@import url(//db.onlinewebfonts.com/c/f4d849075c9b4c0047fc56a828879854?family=Recoleta-Bold);
 .App {
-  max-width: 860px;
+  max-width: 675px;
   margin: 40px auto;
 }
 
@@ -28,11 +28,12 @@ button:active {
 }
 
 h1 {
-  font-family: Recoleta;
+  font-family: Recoleta-Bold;
   font-style: normal;
   font-weight: 900;
   font-size: 36px;
   line-height: 49px;
+  padding-left: 20px;
 }
 
 .front {
@@ -41,7 +42,6 @@ h1 {
   width: 150px;
   height: 150px;
   background: #fff;
-  box-shadow: 0px 30px 35px -16px #d2a280;
   border-radius: 15px;
 }
 .front img {
@@ -59,8 +59,15 @@ h1 {
 
 .card-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 150px));
   grid-gap: 25px;
+  justify-content: center;
+}
+
+.card {
+  box-shadow: 0px 30px 35px -16px #d2a280;
+  max-width: 150px;
+  border-radius: 15px;
 }
 
 p {
@@ -70,14 +77,31 @@ p {
   font-weight: 500;
   font-size: 1em;
   line-height: 36px;
-  margin-top: 100px;
+  margin-top: 50px;
+  margin-bottom: 50px;
 }
 
 .card .front {
   position: absolute;
   transform: rotateY(90deg);
+  transition: 0.2s;
 }
 
 .flipped .front {
   transform: rotateY(0deg);
+  transition: 0.2s;
+  transition-delay: 0.2s;
+}
+
+.card .back {
+  transition: 0.2s;
+}
+
+.flipped .back {
+  transform: rotateY(90deg);
+}
+
+.center {
+  display: flex;
+  justify-content: center;
 }
